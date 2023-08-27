@@ -37,27 +37,47 @@
 // console.log(solution3());`  `
 
 //4.평균은넘겠지
-function solution4() {
-  let fs = require("fs");
-  let input = fs.readFileSync("index.txt").toString().split("\n");
-  let testCases = input[0];
-  let cnt = 0;
+// function solution4() {
+//   let result;
+//   let fs = require("fs");
+//   let input = fs.readFileSync("index.txt").toString().split("\n");
+//   let testCases = input[0];
+//   let cnt = 0;
 
-  // console.log(input[0]);
-  for (let i = 1; i <= testCases; i++) {
-    let data = input[i].split(" ").map(Number);
-    let n = data[0];
-    let summary = 0;
-    for (let i = 1; i <= n; i++) {
-      summary = summary + data[i];
-    }
-    let average = summary / n;
+//   // console.log(input[0]);
+//   for (let i = 1; i <= testCases; i++) {
+//     let data = input[i].split(" ").map(Number);
+//     let n = data[0];
+//     let summary = 0;
+//     for (let i = 1; i <= n; i++) {
+//       summary = summary + data[i];
+//     }
+//     let average = summary / n;
 
-    for (let i = 0; i < n; i++) {
-      if (average < data[i]) cnt += 1;
-    }
-    console.log(cnt / n);
-  }
-}
+//     for (let i = 1; i <= n; i++) {
+//       if (average < data[i]) cnt += 1;
+//     }
+//     result = ((cnt / n) * 100).toFixed(3);
+//     console.log(result);
+//   }
+// }
 
-console.log(solution4());
+// console.log(solution4());
+
+//5. 평균문제
+// function solution5(M) {
+//   let fs = require("fs");
+//   let input = fs.readFileSync("index.txt").toString().split("\n");
+//   let data = input[1].split(" ").map(Number);
+//   let n = input[0];
+//   M = Math.max(...data);
+//   //최고 점수 index
+//   let newSummary = 0;
+//   let newData;
+//   for (let i = 0; i < n; i++) {
+//     newData = (data[i] / M) * 100;
+//     newSummary = newSummary + newData;
+//   }
+//   console.log(newSummary / n);
+// }
+// console.log(solution5());
