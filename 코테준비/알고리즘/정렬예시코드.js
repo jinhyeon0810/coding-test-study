@@ -41,3 +41,22 @@ function insertionSort(arr) {
     }
   }
 }
+
+//4.정수에 대한 오름차순 정렬 예시
+let arr = [1, 8, 5, 9, 21, 3, 7, 2, 15];
+
+function compare(a, b) {
+  if (a < b) return -1;
+  else if (a > b) return 1;
+  else return 0;
+}
+
+arr.sort(compare);
+
+console.log(arr);
+
+//별도로 비교함수를 사용하지 않으면 유니코드 순으로 정렬됨
+
+let arr2 = ["fineapple", "banana", "durian", "apple", "carrot"];
+arr2.sort();
+console.log(arr2);
