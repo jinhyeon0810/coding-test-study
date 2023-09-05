@@ -107,4 +107,88 @@ function solution6() {
   let answer = current - 1;
   console.log(answer);
 }
-console.log(solution6());
+
+//7. 신입사원 : 다시풀어보기
+function solution7() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let testCase = Number(input[0]);
+  let line = 1;
+
+  for (let tc = 0; tc < testCase; tc++) {
+    let n = Number(input[line]);
+    let arr = [];
+    for (let i = line + 1; i <= line + n; i++) {
+      arr.push(input[i].split(" ").map(Number));
+    }
+
+    arr.sort((a, b) => {
+      return a[0] - b[0];
+    });
+    console.log(arr);
+
+    let min = 100001;
+    let answer = 0;
+
+    for (let [x, y] of arr) {
+      if (y < min) {
+        min = y;
+        answer += 1;
+      }
+    }
+    line += n + 1;
+    console.log(answer);
+  }
+}
+
+//8. 주유소
+function solution8() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let countryNum = Number(input[0]);
+  let distance = input[1].split(" ").map(Number);
+  let price = input[2].split(" ").map(Number);
+  console.log(price);
+  let minValue = 10001;
+  let answer = 0;
+  for (let i = 0; i < countryNum; i++) {
+    if (price[i] < minValue) {
+      minValue = price[i];
+      price[i] = minValue;
+    } else {
+      price[i] = minValue;
+    }
+  }
+  for (let i = 0; i < countryNum - 1; i++) {
+    answer = answer + price[i] * distance[i];
+  }
+  console.log(answer);
+}
+
+//9. 회의실 배정
+function solution9() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let allNum = input[0];
+  let arr = [];
+  for (let i = 1; i <= allNum; i++) {
+    arr.push(input[i].split(" ").map(Number));
+  }
+  console.log(arr);
+
+  arr.sort((a, b) => {
+    if (a[1] != b[1]) return a[1] - b[1];
+    else return a[0] - b[0];
+  });
+
+  console.log(arr);
+  let count = 0;
+  let answer = 1;
+  for (let i = 1; i < allNum; i++) {
+    if (arr[count][1] <= arr[i][0]) {
+      answer++;
+      count = i;
+    }
+  }
+  console.log(answer);
+}
