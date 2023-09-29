@@ -96,6 +96,14 @@ function solution4() {
   let nArray = input[1].split(" ").map(Number);
   let m = Number(input[2]);
   let mArray = input[3].split(" ").map(Number);
+
+  nArray.sort((a, b) => a - b);
+  let answer = "";
+  for (let i = 0; i < m; i++) {
+    let cnt = countByRange(nArray, mArray[i], mArray[i]);
+    answer = answer + cnt + " ";
+  }
+  console.log(answer);
 }
 console.log(solution4());
 
@@ -108,4 +116,17 @@ function lowerBound(arr, target, start, end) {
   return end;
 }
 
-function upperBound(arr, target, start, end) {}
+function upperBound(arr, target, start, end) {
+  while (start < end) {
+    let mid = parseInt((start + end) / 2);
+    if (arr[mid] > target) end = mid;
+    else start = mid + 1;
+  }
+  return end;
+}
+
+function countByRange(arr, leftValue, rightValue) {
+  let rightIndex = upperBound(arr, rightValue, 0, arr.length);
+  let leftIndex = lowerBound(arr, leftValue, 0, arr.length);
+  return rightIndex - leftIndex;
+}
