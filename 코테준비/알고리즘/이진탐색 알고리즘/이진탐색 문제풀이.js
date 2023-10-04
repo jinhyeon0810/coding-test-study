@@ -105,7 +105,6 @@ function solution4() {
   }
   console.log(answer);
 }
-console.log(solution4());
 
 function lowerBound(arr, target, start, end) {
   while (start < end) {
@@ -130,3 +129,17 @@ function countByRange(arr, leftValue, rightValue) {
   let leftIndex = lowerBound(arr, leftValue, 0, arr.length);
   return rightIndex - leftIndex;
 }
+
+//5. 병사 배치
+function solution5() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+
+  let n = Number(input[0]);
+
+  let array = input[1].split(" ").map(Number);
+
+  array.reverse();
+  console.log(array);
+}
+console.log(solution5());
