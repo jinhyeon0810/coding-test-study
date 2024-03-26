@@ -18,6 +18,25 @@ function solution1() {
   console.log(num);
 }
 
+//1-1 동전 그리디문제
+function solution1_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let [a, b] = input[0].split(" ");
+  let n = Number(a);
+  let k = Number(b);
+  let arr = [];
+  for (let i = 1; i <= n; i++) {
+    arr.push(Number(input[i]));
+  }
+
+  let num = 0;
+  for (let i = n - 1; i >= 0; i--) {
+    num += parseInt(k / arr[i]);
+    k = k % arr[i];
+  }
+}
+
 //2. ATM
 function solution2() {
   //큰 값이 뒤로 가야됨
@@ -35,6 +54,20 @@ function solution2() {
   console.log(num);
 }
 
+//2-1 ATM 문제 복습
+function solution2_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let num = Number(input[0]);
+  let arr = input[1].split(" ").map(Number);
+  arr.sort((a, b) => a - b);
+  let answer = 0;
+  let summary = 0;
+  for (let i = 0; i < num; i++) {
+    summary += arr[i];
+    answer += summary;
+  }
+}
 //3. 잃어버린 괄호 (어려움)
 function solution3() {
   let fs = require("fs");
@@ -56,6 +89,25 @@ function solution3() {
   console.log(answer);
 }
 
+//3-1 잃어버린 괄호
+function solution3_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  console.log(input[0]);
+  let data = input[0].split("-");
+  let answer = 0;
+  for (let i = 0; i < data.length; i++) {
+    let value = data[i]
+      .split("+")
+      .map(Number)
+      .reduce((a, b) => a + b);
+    console.log(value, "here");
+    if (i === 0) answer = value;
+    else answer -= value;
+  }
+  return answer;
+}
+
 //4.설탕배달
 function solution4() {
   let fs = require("fs");
@@ -67,6 +119,19 @@ function solution4() {
     answer = parseInt(input[0] / 5) + 1;
   }
   console.log(answer);
+}
+
+//4-1 설탕배달
+function solution4_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let n = Number(input);
+
+  let result = 0;
+  console.log(n);
+  if (n % 5 !== 3 && n % 3 !== 0) result = -1;
+  else result = parseInt(n / 5) + 1;
+  return result;
 }
 
 //5.A->B, a를b로 바꾸는 문제
@@ -90,6 +155,27 @@ function solution5() {
   }
   if (flag) console.log(result);
 }
+
+//5-1
+function solution5_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split(" ");
+  let [a, b] = input.map(Number);
+  let num = 0;
+
+  while (b !== a) {
+    if (a > b) return -1;
+    else if (b % 2 === 0) {
+      b = b / 2;
+      num++;
+    } else if (b % 2 !== 0) {
+      b = parseInt(b / 10);
+      num++;
+    }
+  }
+  return num + 1;
+}
+console.log(solution5_1());
 
 //6. 수들의 합
 // 연속된 수의 합인데 결과값을 넘어서면 while문 탈출하고 그때의 current 에서 1을 뺀 값이 연속된 수들의 갯수이다..
