@@ -175,7 +175,7 @@ function solution5_1() {
   }
   return num + 1;
 }
-console.log(solution5_1());
+// console.log(solution5_1());
 
 //6. 수들의 합
 // 연속된 수의 합인데 결과값을 넘어서면 while문 탈출하고 그때의 current 에서 1을 뺀 값이 연속된 수들의 갯수이다..
@@ -251,6 +251,14 @@ function solution8() {
   console.log(answer);
 }
 
+//8-1 주유소
+function solution8_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let number = Number(input[0]);
+  console.log(input);
+}
+
 //9. 회의실 배정
 function solution9() {
   let fs = require("fs");
@@ -260,14 +268,14 @@ function solution9() {
   for (let i = 1; i <= allNum; i++) {
     arr.push(input[i].split(" ").map(Number));
   }
-  console.log(arr);
+  console.log(arr, "arr1");
 
   arr.sort((a, b) => {
     if (a[1] != b[1]) return a[1] - b[1];
     else return a[0] - b[0];
   });
 
-  console.log(arr);
+  console.log(arr, "arr2");
   let count = 0;
   let answer = 1;
   for (let i = 1; i < allNum; i++) {
@@ -278,3 +286,153 @@ function solution9() {
   }
   console.log(answer);
 }
+// console.log(solution9());
+
+//9-1 회의실
+function solution9_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let n = Number(input[0]);
+  console.log(n);
+  let arr = [];
+  for (let i = 1; i <= n; i++) {
+    arr.push(input[i].split(" ").map(Number));
+  }
+  console.log(arr);
+
+  arr.sort((a, b) => {
+    if (a[1] !== b[1]) return a[1] - b[1];
+    else return a[0] - b[0];
+  });
+  let answer = 1;
+  let count = 0;
+  for (let i = 1; i < n; i++) {
+    if (arr[count][1] <= arr[i][0]) {
+      answer += 1;
+      count = i;
+    }
+  }
+  return answer;
+}
+// console.log(solution9_1());
+
+//10. 11509  ㅅㅂ 이거모르겟음
+function solution10() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let n = Number(input[0]);
+  let arr = input[1].split(" ").map(Number);
+  let count = 0;
+  // for (let i = 0; i < 5; i++) {
+  //   if (arr[i] - arr[i + 1] === 1) {
+  //     if (arr[i + 1] - arr[i + 2] !== 1) {
+  //       count += 1;
+  //       i = i + 2;
+  //     }
+  //   } else count += 1;
+  // }
+}
+
+//11. 피보나치 백준 9009
+function solution11() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let num = Number(input[0]);
+  let arr = [];
+  for (let i = 1; i <= num; i++) arr.push(Number(input[i]));
+
+  function makeFibonacciArr(number) {
+    let fibo = [0, 1];
+    while (fibo[fibo.length - 1] < number) {
+      const sum = fibo[fibo.length - 1] + fibo[fibo.length - 2];
+      if (sum <= number) fibo.push(sum);
+      else return fibo;
+    }
+    return fibo;
+  }
+  let result = [];
+  for (let number of arr) {
+    while (number > 0) {
+      console.log("number", number);
+      //들어가는값이 >0일때 , 들어가는값은 ? :
+      //계속반복 :들어간값에서  들어간 값보다 작은 가장 큰 fibo값을 빼줌
+      const fiboArr = makeFibonacciArr(number);
+      console.log("fiboArr", fiboArr);
+      number = number - fiboArr[fiboArr.length - 1];
+      result.push(fiboArr[fiboArr.length - 1]);
+    }
+  }
+  let answer = "";
+  for (let i = result.length - 1; i >= 0; i--)
+    answer = answer + result[i] + " ";
+  console.log("answer", answer);
+}
+
+//11. 19939번 : 이거 규칙을어떻게 찾냐 신기하다;;
+function solution12() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split(" ");
+  let inputNumArr = input.map((data) => parseInt(data, 10));
+  let [n, k] = inputNumArr;
+  //5개를 배열 3개 안으로 넣는거?
+  //서로다른 3개의 합이 5임.,  최대-최소
+  //규칙 : 최대-최소 값이 차이가 적어야되기 때문에, 최대한 연속된 수로 나누어 공을 담아야함
+  // 연속된 수의 합일 경우, 최대-최소 값이 k-1로 나타나는 규칙성을 띔
+  // 나머지 경우는 k 으로 나타나는 규칙성을 띔
+  let sum = 0;
+  for (let i = 1; i <= k; i++) {
+    sum += i;
+  }
+  console.log("sum", sum);
+  if (sum > n) {
+    console.log(-1);
+  } else {
+    if (sum % k === 0) console.log("k-1 값", k - 1);
+    else console.log("k값", k);
+  }
+}
+
+//17609번?
+function solution13() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("/n");
+  console.log(input[1]);
+  function palindrome(x) {
+    return x === x.split("").reverse().join("");
+  }
+  let testCase = Number(input[0]);
+  let arr = [];
+
+  for (let tc = 1; tc <= testCase; i++) {
+    //n번째 값을 가지고 palindrome에 넣어서
+    // 나온값이 회문이면 0, 유사회문이면 1, 둘다 아니면 2 출력
+    let data = input[tc];
+    let n = data.length;
+  }
+}
+
+function solution14() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let [width, length, height] = input[0].split(" ").map((data) => Number(data));
+  let boxSize = width * length * height;
+  let numberOfCubeType = Number(input[1]);
+  let numberOfCubesArr = [];
+  let result = 0;
+  let usedCount = 0;
+  for (let i = 2; i <= 1 + numberOfCubeType; i++) {
+    numberOfCubesArr.push(Number(input[i].split(" ").map((data) => data)[1]));
+  }
+  for (let i = numberOfCubeType - 1; i >= 0; i--) {
+    //큐브 마다 박스 채우는 갯수 8배씩 차이남
+    usedCount *= 8;
+    let currentCubeSize = (2 ** i) ** 3;
+    let currentMaxCount = boxSize / currentCubeSize - usedCount;
+    let currentCount = Math.min(currentMaxCount, numberOfCubesArr[i]);
+    result += currentCount;
+    usedCount += currentCount;
+  }
+  if (usedCount === boxSize) return result;
+  else return -1;
+}
+console.log(solution14());

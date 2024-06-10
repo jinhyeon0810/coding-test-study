@@ -16,9 +16,12 @@ function selectionSort(arr) {
       if (arr[minIndex] > arr[j]) {
         minIndex = j;
         let temp = arr[i];
+        console.log(temp);
         arr[i] = arr[minIndex];
         arr[minIndex] = temp;
+        console.log(temp, "밑에꺼");
         console.log("포함되냐?");
+        console.log(arr);
       }
     }
   }
@@ -28,6 +31,7 @@ function selectionSort(arr) {
   }
   console.log(answer);
 }
+// console.log(selectionSort([3, 4, 1, 10, 5, 6]));
 
 //2.수 정렬하기
 function solution2() {
@@ -195,5 +199,99 @@ function solution9() {
       answer = answer + i + "";
     }
   }
-  console.log(answer);
+  // console.log(answer);
+}
+
+//선택정렬알고리즘
+function selectionSort1() {
+  for (let i = 0; i < inputArr.length; i++) {
+    let minIndex = i;
+    for (let j = i + 1; j < inputArr.length; j++) {
+      if (inputArr[minIndex] > inputArr[j]) {
+        let temp = inputArr[minIndex];
+        inputArr[minIndex] = inputArr[j];
+        inputArr[j] = temp;
+      }
+    }
+  }
+  let answer = "";
+  for (let i = 0; i < inputArr.length; i++) {
+    answer = answer + inputArr[i] + " ";
+  }
+  return answer;
+}
+
+// console.log(selectionSort1(inputArr));
+
+//병합정렬
+//반으로 계속 분할하고, 더이상 분할
+
+//1-1 세수정렬
+function solution1_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split(" ");
+  let inputData = input.map(Number);
+  inputData.sort((a, b) => a - b);
+
+  return inputData;
+}
+
+//2-1 수 정렬
+function solution2_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let n = Number(input[0]);
+  let arr = [];
+  for (let i = 1; i <= n; i++) {
+    arr.push(Number(input[i]));
+  }
+
+  arr.sort((a, b) => a - b);
+  return arr;
+}
+
+//3-1 2차원평면 정렬
+function solution3_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let n = Number(input[0]);
+  let arr = [];
+  for (let i = 1; i <= n; i++) {
+    let [x, y] = input[i].split(" ").map(Number);
+    arr.push([x, y]);
+  }
+
+  arr.sort((a, b) => {
+    if (a[0] === b[0]) return a[1] - b[1];
+    else return a[0] - b[0];
+  });
+
+  let answer = "";
+  for (let x of arr) {
+    answer = answer + x[0] + " " + x[1] + "\n";
+  }
+
+  return answer;
+}
+
+//4-1 좌표정렬2
+function solution4_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let n = Number(input[0]);
+  let data = [];
+  for (let i = 1; i < n; i++) {
+    let [x, y] = input[i].split(" ").map(Number);
+    data.push([x, y]);
+  }
+
+  data.sort((a, b) => {
+    if (a[1] === b[1]) return a[0] - b[0];
+    else return a[1] - b[1];
+  });
+
+  let answer = "";
+  for (let x of data) answer += x[0] + " " + x[1] + "\n";
+
+  return answer;
 }

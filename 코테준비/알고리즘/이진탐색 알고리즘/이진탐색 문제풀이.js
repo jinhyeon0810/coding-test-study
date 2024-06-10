@@ -28,6 +28,38 @@ function solution1() {
   console.log(result);
 }
 
+//1-1. 예산요청
+function solution1_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let arr = input[1].split(" ").map((data) => Number(data));
+  let arrSorted = arr.sort((a, b) => a - b);
+  let total = Number(input[2]);
+  let arrSum = arr.reduce((a, b) => a + b);
+  let result = 0;
+
+  if (arrSum <= total) {
+    return Math.max(...arrSorted);
+  } else {
+    let start = 1;
+    let end = Math.max(...arrSorted);
+    while (start <= end) {
+      let mid = parseInt((start + end) / 2);
+      let temptotal = 0;
+      for (x of arrSorted) {
+        temptotal += Math.min(x, mid);
+      }
+      if (temptotal <= total) {
+        result = mid;
+        start = mid + 1;
+      } else {
+        end = mid - 1;
+      }
+    }
+    return result;
+  }
+}
+
 //2.나무자르기
 function solution2() {
   let fs = require("fs");
@@ -54,8 +86,36 @@ function solution2() {
       start = mid + 1;
     }
   }
-  console.log(result);
 }
+//2-1 나무자르기
+function solution2_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let [getTreeHeight] = input[0].split(" ").map(Number);
+  let treeHeightArr = input[1].split(" ").map(Number);
+
+  let start = 1;
+  let end = Math.max(...treeHeightArr);
+  let tempHeight = 0;
+  let result = 0;
+
+  while (start <= end) {
+    let mid = parseInt((start + end) / 2);
+    for (height of treeHeightArr) {
+      if (height >= mid) tempHeight += height - mid;
+    }
+
+    if (tempHeight >= getTreeHeight) {
+      result = mid;
+      start = mid + 1;
+    } else {
+      end = mid - 1;
+    }
+    tempHeight = 0;
+  }
+  return result;
+}
+console.log(solution2_1());
 
 //3. 랜선자르기 파라메르틱 서치 길이가 클수록 만들수있는 갯수는 적어짐
 function solution3() {
@@ -86,6 +146,11 @@ function solution3() {
     }
   }
   console.log(result);
+}
+
+//3-1
+function solution3_1(){
+  
 }
 
 //4.숫자카드문제   lowerBound와 upperBound를 이용하여 중복숫자 갯수를 구할 수 있음
@@ -140,6 +205,4 @@ function solution5() {
   let array = input[1].split(" ").map(Number);
 
   array.reverse();
-  console.log(array);
 }
-console.log(solution5());
