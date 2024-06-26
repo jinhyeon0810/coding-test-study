@@ -411,7 +411,7 @@ function solution7() {
     }
 
     for (let i = 0; i < number; i++) {
-      if (visited[i]) continue;
+      if (visited[k]) continue;
       visited[i] = true;
       selected.push(i);
       dfs(depth + 1);
@@ -423,3 +423,75 @@ function solution7() {
   console.log(minValue);
 }
 // console.log(solution7());
+
+//8. 로또 백준 6603
+function solution8() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+
+  for (let i = 0; i < input.length - 1; i++) {
+    let line = input[i].split(" ").map(Number);
+    let k = line[0];
+    let arrS = [];
+    for (let j = 1; j <= k; j++) arrS.push(line[j]);
+    let visited = new Array(k).fill(false);
+    let selected = [];
+
+    function dfs(depth, start) {
+      if (depth == 6) {
+        let result = [];
+        let answer = "";
+        for (let i of selected) result.push(arrS[i]);
+        for (let x of result) answer += x + " ";
+        answer += "\n";
+
+        console.log("answer", answer);
+        return answer;
+      }
+
+      for (let i = start; i < k; i++) {
+        if (visited[i]) continue;
+        visited[i] = true;
+        selected.push(i);
+        dfs(depth + 1, i + 1);
+        selected.pop();
+        visited[i] = false;
+      }
+    }
+
+    dfs(0, 0);
+  }
+}
+
+//9. 백준 9663 N-Queen 문제
+function solution9() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString();
+  let n = Number(input[0]);
+  console.log(n);
+  let queen = [];
+  //위치시킬수 있는지 true/false 함수
+  function possible([a, b]) {
+    for (let [x, y] of queen) {
+      if (a === x || b === y) return false;
+      if (Math.abs(a - x) === Math.abs(b - y)) return false;
+    }
+    return true;
+  }
+  let cnt = 0;
+  function backtracking(row) {
+    if (row === n) {
+      cnt += 1;
+      return;
+    }
+    for (let i = 0; i < n; i++) {
+      if (!possible([row, i])) continue;
+      queen.push([row, i]);
+      backtracking(row + 1);
+      queen.pop();
+    }
+  }
+  backtracking(0);
+  console.log("cnt", cnt);
+}
+console.log(solution9());
