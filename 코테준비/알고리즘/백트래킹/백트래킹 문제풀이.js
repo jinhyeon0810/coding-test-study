@@ -494,4 +494,129 @@ function solution9() {
   backtracking(0);
   console.log("cnt", cnt);
 }
-console.log(solution9());
+// console.log(solution9());
+
+//10. 백준 1987번 알파벳문제 이따 다시풀어보기
+function solution10() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let [col, row] = input[0].split(" ").map(Number);
+  console.log(col, row);
+  let arr = [];
+  for (let i = 1; i <= col; i++) arr.push(input[i]);
+  console.log("arr", arr);
+  let dx = [-1, 1, 0, 0];
+  let dy = [0, 0, -1, 1];
+  let visited = new Set();
+  console.log("visite", visited);
+  let maxDepth = 0;
+
+  function dfs(depth, x, y) {
+    maxDepth = Math.max(maxDepth, depth);
+    for (let i = 0; i < 4; i++) {
+      let nx = x + dx[i];
+      let ny = y + dy[i];
+      if (nx < 0 || ny < 0 || nx >= col || ny >= row) continue;
+
+      if (visited.has(arr[nx][ny])) continue;
+      console.log("visited", visited);
+      visited.add(arr[nx][ny]);
+      dfs(depth + 1, nx, ny);
+      visited.delete(arr[nx][ny]);
+    }
+  }
+  visited.add(arr[0][0]);
+  dfs(1, 0, 0);
+  console.log(maxDepth);
+}
+
+//10-1 백준 1987 알파벳
+function solution10_1() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let [col, row] = input[0].split(" ").map(Number);
+  let graph = [];
+  for (let i = 1; i <= col; i++) {
+    let line = input[i];
+    graph.push(line);
+  }
+
+  let visited = new Set();
+  visited.add(graph[0][0]);
+  // 돌아가면서 지정해줄 인덱스, i번째 [dx][dy]식으로 나타내면 상하좌우를 움직일 수 있다.
+  let dx = [-1, 1, 0, 0];
+  let dy = [0, 0, -1, 1];
+  let maxDepth = 0;
+  function dfs(depth, x, y) {
+    maxDepth = Math.max(depth, maxDepth);
+    for (let i = 0; i < dx.length; i++) {
+      let nx = x + dx[i];
+      let ny = y + dy[i];
+
+      if (nx < 0 || ny < 0 || nx >= col || ny >= row) continue;
+
+      if (visited.has(graph[nx][ny])) continue;
+
+      visited.add(graph[nx][ny]);
+      dfs(depth + 1, nx, ny);
+      visited.delete(graph[nx][ny]);
+    }
+  }
+  dfs(1, 0, 0);
+  console.log("max", maxDepth);
+}
+
+// console.log(solution10_1());
+
+//11. 백준2529 부등호 다시풀기
+function solution11() {
+  let fs = require("fs");
+  let input = fs.readFileSync("index.txt").toString().split("\n");
+  let num = Number(input[0]);
+  let sign = input[1].split(" ");
+
+  let result = [];
+  let visited = new Array(10).fill(false);
+  let value = "";
+  let first = "";
+  function dfs(depth) {
+    if (depth === num + 1) {
+      let checked = true;
+      for (let i = 0; i < num; i++) {
+        if (sign[i] === ">") {
+          //하나라도 만족 안하는게있으면 false때림
+          if (result[i] < result[i + 1]) checked = false;
+        } else if (sign[i] === "<") {
+          //하나라도 만족 안하는게 있으면 false때림
+          if (result[i] > result[i + 1]) checked = false;
+        }
+      }
+      if (checked) {
+        value = "";
+        for (let data of result) {
+          value += data + "";
+        }
+        if (first === "") {
+          console.log("firstbefore", first);
+          //순열이 0부터시작하니까 가장먼저 value값을 걍 first에 넣음
+          first = value;
+          console.log("firstafter", first);
+        }
+      }
+      return;
+    }
+
+    for (let i = 0; i < 10; i++) {
+      if (visited[i]) continue;
+      visited[i] = true;
+      result.push(i);
+      dfs(depth + 1);
+      visited[i] = false;
+      result.pop();
+    }
+  }
+  dfs(0);
+  console.log(value, first);
+}
+
+console.log(solution11());
