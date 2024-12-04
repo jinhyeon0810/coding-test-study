@@ -41,3 +41,7 @@ function optimizeSame(arr1, arr2) {
 }
 
 console.log(optimizeSame([1, 2, 3, 2], [1, 4, 9, 1]));
+
+/* for ...of 문법과 for ...in 문법의 차이점
+for of 의 경우 배열, 문자열, Map, Set 등 iterable 객체를 순회할 때 사용됩니다.
+for in 의 경우 객체(object)의 속성(key값)을 순회할 때 사용됩니다. */
