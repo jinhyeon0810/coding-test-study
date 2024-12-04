@@ -32,6 +32,8 @@ function optimizeSame(arr1, arr2) {
 
   //counter1[val] 와 counter2[val] 의 값이 같아야한다.
   for (let key in counter1) {
+    if (!(key ** 2) in counter2) return false;
+
     if (counter1[key] !== counter2[key ** 2]) return false;
   }
 
