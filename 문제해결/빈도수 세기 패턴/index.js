@@ -74,3 +74,26 @@ function validAnagram(string1, string2) {
 console.log("validAnagram 테스트", validAnagram("anagram", "nagaram"));
 
 //개선코드
+function validAnagram2(string1, string2) {
+  //문자열 길이가 다르면 false
+  if (string1.length !== string2.length) return false;
+
+  const lookup = {};
+
+  for (let i = 0; i < string1.length; i++) {
+    const letter = string1[i];
+    //문자열 각각의 문자를 객체의 key값으로 두고, 문자의 갯수를 value로 관리합니다.
+    //ex) {a:1, b:1, c:1}
+    lookup[letter] = lookup[letter] ? lookup[letter] + 1 : 1;
+  }
+
+  for (let i = 0; i < string2.length; i++) {
+    const letter = string2[i];
+    if (!lookup[letter]) return false;
+    //string1의 문자열 정보를 저장한 객체에서, string2 문자열 정보를 빼줍니다
+    //string1 과 string2의 각각 문자 갯수는 똑같으므로 값들이 모두 0으로 됩니다.
+    lookup[letter] -= 1;
+  }
+}
+
+console.log("validAnagram2 테스트", validAnagram("anagram", "nagaram"));
