@@ -1,6 +1,6 @@
 //다중포인터개념
-//인덱스나 위치에 해당하는 포인터나 값을 만든 다음 특정 조건에따라
-//중간지점에서부터 시작 or 끝 지점이나 양쪽 지점향해 이동시키는것
+//배열이나 문자열 등의 순차적인 데이터에서 두개 이상의 포인터(인덱스)를 이용하여
+//문제를 효율적으로 해결하는 알고리즘 패턴
 
 //보통 한쌍의 값이나 조건을 만족하는 무엇인가를 찾음
 //example
@@ -29,3 +29,19 @@ function improvedSolution(arr) {
   }
 }
 console.log("시간 복잡도 O(N)", improvedSolution([-3, -2, -1, 0, 1, 2, 3]));
+
+//다중포인터 countUniqueValue
+//정렬된 배열을 받아들이고 배열의 고유 값을 세는 함수 구현
+function countUniqueValue(arr) {
+  let i = 0;
+
+  for (let j = 1; j < arr.length; j++) {
+    if (arr[i] !== arr[j]) {
+      i++;
+      arr[i] = arr[j];
+    }
+  }
+  return i + 1;
+}
+
+[1, 2, 3, 4, 4, 4, 7, 7, 12, 12, 13];
