@@ -18,6 +18,26 @@ function maxSubbarraySum(arr, num) {
   return max;
 }
 
-console.log(maxSubbarraySum([2, 6, 9, 2, 1, 8, 5, 6, 3], 3));
+// console.log(maxSubbarraySum([2, 6, 9, 2, 1, 8, 5, 6, 3], 3));
 
 //2. 시간 복잡도 O(N)
+//위 문제를 슬라이딩 윈도우 접근법으로 해결
+function useSlidingWindow(arr, num) {
+  // 1. 우선 3개의 idx 0 부터 num개의 합을 구한다.
+  // 2. 3개의 값 중 다음 idx 데이터를 더하고, 맨앞 idx 데이터를 뺀다.
+  // 3. 2를 통해 산출된 값과 1을 통해 산출된 값을 비교하여 더 큰값을 max함수에 저장한다.
+  // 3의 과정을 반복한다.
+  let max = 0;
+  for (let i = 0; i < num; i++) {
+    max += arr[i];
+  }
+
+  tempMax = max;
+  for (let i = num; i < arr.length; i++) {
+    tempMax = tempMax - arr[i - num] + arr[i];
+    max = Math.max(tempMax, max);
+  }
+  return max;
+}
+
+console.log("here", useSlidingWindow([2, 6, 9, 2, 1, 8, 5, 6, 3], 3));
